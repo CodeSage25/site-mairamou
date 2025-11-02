@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Mairamou 💫</title>
+    
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    📸 INSTRUCTIONS POUR AJOUTER VOS IMAGES ET MUSIQUE 📸
+    ═══════════════════════════════════════════════════════════════
+    
+    🎵 MUSIQUE:
+    Allez à la ligne 280 et remplacez l'URL dans:
+    <source src="METTEZ_LE_LIEN_DE_LA_MUSIQUE_ICI" type="audio/mpeg">
+    
+    Vous pouvez utiliser:
+    - Un lien YouTube converti en MP3 (via un convertisseur en ligne)
+    - Un lien Dropbox/Google Drive partagé
+    - Un lien direct vers un fichier MP3 hébergé en ligne
+    
+    📸 IMAGES:
+    Allez aux lignes 235-240 et ajoutez vos liens d'images dans:
+    <div class="photo-frame"><img src="LIEN_IMAGE_1" alt="Nous"></div>
+    
+    Pour héberger vos images gratuitement:
+    - Imgur.com (simple et gratuit)
+    - Dropbox/Google Drive (utilisez le lien de partage direct)
+    - imgbb.com
+    
+    ═══════════════════════════════════════════════════════════════
+    -->
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .letter {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .quiz-container {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .question {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 80px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        #noBtn {
+            background: #ddd;
+            color: #666;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .photo-frame {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .photo-frame::before {
+            content: '📸';
+            font-size: 3em;
+            opacity: 0.3;
+        }
+
+        .photo-frame img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-text {
+            text-align: center;
+            color: #764ba2;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.98);
+            padding: 60px;
+            border-radius: 30px;
+            text-align: center;
+            z-index: 10000;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .celebration h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .celebration p {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .close-btn {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        .heart {
+            display: inline-block;
+            color: #ff6b9d;
+            animation: heartbeat 1.5s infinite;
+            font-size: 1.5em;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+        }
+
+        .music-note {
+            text-align: center;
+            color: #764ba2;
+            font-style: italic;
+            margin-top: 20px;
+            opacity: 0.7;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <!-- Section Lettre -->
+        <div class="section">
+            <h1> InnaYannick💫</h1>
+            <div class="letter">
+                <p>Ma chère <span class="highlight">Mairamou Boubakari</span>,</p>
+                <p>Il y a des mots qui restent coincés dans le cœur, des sentiments qui ne trouvent pas leur place entre l'amitié et l'amour. Aujourd'hui, je prends mon courage pour te dire ce que je ressens vraiment.</p>
+                <p>Tu me <span class="highlight">manques</span>. Tellement. Plus que je ne saurais l'exprimer avec de simples mots. Tu as été ma meilleure amie, ma plus belle rencontre féminine, celle qui a illuminé mes jours d'une lumière si douce et si pure.</p>
+                <p>Je ne sais pas si ce que je ressens est de l'amour ou de l'amitié. Peut-être est-ce les deux à la fois ? Peut-être est-ce quelque chose d'encore plus précieux, quelque chose d'unique qui n'a pas besoin d'étiquette ?</p>
+                <p>Ce que je sais, c'est que tu comptes énormément pour moi. Que ton absence crée un vide que personne d'autre ne peut combler. Que penser à toi fait battre mon cœur différemment.</p>
+                <p>Alors voilà, <span class="highlight">Mairamdjo</span>, je te confie ces mots, ces émotions, cette incertitude belle et terrifiante à la fois. Parce que tu mérites de savoir à quel point tu es précieuse à mes yeux.</p>
+                <p style="text-align: right; margin-top: 30px; font-style: italic;">Avec toute ma tendresse 💜</p>
+            </div>
+        </div>
+
+        <!-- Section Quiz -->
+        <div class="section">
+            <div class="quiz-container">
+                <h2>Une question pour toi... 💭</h2>
+                <p class="question">Est-ce que je te manque aussi, Mairamdjo ? 💜</p>
+                <div class="buttons">
+                    <button id="yesBtn">Oui 💜</button>
+                    <button id="noBtn">Non</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Galerie -->
+        <div class="section">
+            <h2>Nos Souvenirs Ensemble 📸</h2>
+            <div class="gallery">
+                <!-- 📸 AJOUTEZ VOS IMAGES ICI - Remplacez "LIEN_IMAGE" par vos vrais liens -->
+                <div class="photo-frame"><img src="./a35fdbe5-b433-46d4-9d07-7474ef6db4c3.webp" alt="Nous" onerror="this.style.display='none'"></div>
+                <div class="photo-frame"><img src="./IMG_0631.webp" alt="Nous" onerror="this.style.display='none'"></div>
+                <div class="photo-frame"><img src="./IMG_0687.webp" alt="Nous" onerror="this.style.display='none'"></div>
+                <div class="photo-frame"><img src="./IMG_0748.webp" alt="Nous" onerror="this.style.display='none'"></div>
+                <div class="photo-frame"><img src="./IMG_0629.webp" alt="Nous" onerror="this.style.display='none'"></div>
+                <div class="photo-frame"><img src="./8f59d966-8bbd-4d8d-b14b-63af89227028.webp" alt="Nous" onerror="this.style.display='none'"></div>
+            </div>
+            <p class="upload-text">Nos plus beaux souvenirs ensemble... 💫</p>
+        </div>
+    </div>
+
+    <!-- Célébration -->
+    <div class="celebration" id="celebration">
+        <h2>Mon cœur s'illumine ! <span class="heart">💜</span></h2>
+        <p>Tu me manques aussi, et savoir que c'est réciproque me remplit de joie...</p>
+        <p>Même si je crains que ce soit un <span class="highlight">amour impossible</span>, savoir que tu ressens quelque chose aussi est déjà un cadeau précieux.</p>
+        <p>Tu es et resteras toujours quelqu'un de très spécial dans ma vie, Mairamdjo. <span class="heart">💜</span></p>
+        <div class="music-note">🎵 Glimpse of Us - Joji 🎵</div>
+        <!-- 🎵 AJOUTEZ VOTRE MUSIQUE ICI - Remplacez le lien ci-dessous -->
+        <audio id="music" controls>
+            <source src="./Joji x Toby -  Glimpse of Us x His theme (1).mp3" type="audio/mpeg">
+            Votre navigateur ne supporte pas l'élément audio.
+        </audio>
+        <button class="close-btn" id="closeBtn">Fermer 💜</button>
+    </div>
+
+    <script>
+        // Créer les étoiles
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Bouton Non qui s'échappe
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        let noBtnAttempts = 0;
+
+        noBtn.addEventListener('mouseover', () => {
+            noBtnAttempts++;
+            const maxX = window.innerWidth - 150;
+            const maxY = window.innerHeight - 100;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transform = 'none';
+            
+            if (noBtnAttempts > 3) {
+                noBtn.textContent = '😢';
+            }
+            if (noBtnAttempts > 5) {
+                noBtn.textContent = '🥺 Pourquoi ?';
+            }
+        });
+
+        noBtn.addEventListener('click', () => {
+            noBtn.style.position = 'fixed';
+            const randomX = Math.random() * (window.innerWidth - 150);
+            const randomY = Math.random() * (window.innerHeight - 100);
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+
+        // Bouton Oui - Célébration
+        yesBtn.addEventListener('click', () => {
+            // Masquer le quiz
+            document.querySelector('.quiz-container').style.display = 'none';
+            
+            // Afficher l'overlay et la célébration
+            document.getElementById('overlay').style.display = 'block';
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'block';
+            
+            // Lancer les feux d'artifice
+            launchFireworks();
+            
+            // Tenter de lire la musique (note: vous devrez ajouter un vrai lien audio)
+            const music = document.getElementById('music');
+            music.play().catch(e => console.log('Lecture audio nécessite une interaction utilisateur'));
+        });
+
+        // Bouton Fermer
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('celebration').style.display = 'none';
+            document.querySelector('.quiz-container').style.display = 'block';
+            
+            // Arrêter la musique
+            const music = document.getElementById('music');
+            music.pause();
+            music.currentTime = 0;
+        });
+
+        // Feux d'artifice
+        function launchFireworks() {
+            const colors = ['#ff0080', '#ff8c00', '#ffd700', '#00ff80', '#00bfff', '#bf00ff'];
+            let fireworkCount = 0;
+            const maxFireworks = 50;
+
+            const interval = setInterval(() => {
+                if (fireworkCount >= maxFireworks) {
+                    clearInterval(interval);
+                    return;
+                }
+
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                
+                for (let i = 0; i < 30; i++) {
+                    createFireworkParticle(x, y, colors[Math.floor(Math.random() * colors.length)]);
+                }
+                
+                fireworkCount++;
+            }, 200);
+        }
+
+        function createFireworkParticle(x, y, color) {
+            const particle = document.createElement('div');
+            particle.className = 'firework';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            particle.style.background = color;
+            document.body.appendChild(particle);
+
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 5 + 2;
+            const vx = Math.cos(angle) * velocity;
+            const vy = Math.sin(angle) * velocity;
+
+            let posX = x;
+            let posY = y;
+            let opacity = 1;
+
+            const animation = setInterval(() => {
+                posX += vx;
+                posY += vy;
+                opacity -= 0.02;
+
+                particle.style.left = posX + 'px';
+                particle.style.top = posY + 'px';
+                particle.style.opacity = opacity;
+
+                if (opacity <= 0) {
+                    clearInterval(animation);
+                    particle.remove();
+                }
+            }, 20);
+        }
+
+        // Animation des cadres photo au survol
+        const frames = document.querySelectorAll('.photo-frame');
+        frames.forEach((frame, index) => {
+            frame.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05) rotate(' + (Math.random() * 10 - 5) + 'deg)';
+            });
+            
+            frame.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>
